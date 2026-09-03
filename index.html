@@ -51,33 +51,7 @@
       <noscript>Peli tarvitsee JavaScriptin toimiakseen.</noscript>
     </main>
 
-    <script type="module">
-      // Use two independent CDNs so a regional CDN outage does not break the game.
-      const threeSources = [
-        'https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.min.js',
-        'https://unpkg.com/three@0.161.0/build/three.module.js',
-      ];
-
-      let three;
-      for (const source of threeSources) {
-        try {
-          three = await import(source);
-          break;
-        } catch (error) {
-          console.warn(`Three.js-lataus epäonnistui osoitteesta ${source}`, error);
-        }
-      }
-
-      if (three) {
-        globalThis.THREE = three;
-        await import('./main.js?v=3');
-      } else {
-        document.querySelector('#start-screen .panel').innerHTML = `
-          <div class="eyebrow">LATAUSVIRHE</div>
-          <h2>Peli ei latautunut</h2>
-          <p class="lead">Selain tai verkkosi esti pelimoottorin lataamisen molemmista varapalveluista.</p>
-          <button type="button" onclick="location.reload()">Yritä uudelleen <span>↻</span></button>`;
-      }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.min.js"></script>
+    <script src="main.js"></script>
   </body>
 </html>
