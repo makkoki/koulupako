@@ -1,6 +1,5 @@
 /* Koulupako 3D — rakenne on jaettu pieniin osiin helppoa jatkokehitystä varten. */
-// index.html lataa Three.js:n varapalveluineen ennen tämän pelitiedoston suorittamista.
-const THREE = globalThis.THREE;
+'use strict';
 
 const CONFIG = {
   playerSpeed: 7.5,
@@ -117,4 +116,4 @@ function formatTime(seconds){const m=Math.floor(seconds/60).toString().padStart(
 
 function animate(){requestAnimationFrame(animate);const dt=Math.min(clock.getDelta(),.05),t=performance.now()/1000;if(state.started&&!state.finished){state.elapsed=(performance.now()-state.startTime)/1000;ui.timer.textContent=formatTime(state.elapsed);updatePlayer(dt);updateKeys(t);updateRobot(dt,t);checkExit();}camera.rotation.set(state.pitch,state.yaw,0);renderer.render(scene,camera);}
 
-init();
+if(typeof THREE==='undefined'){document.body.innerHTML='<p style="padding:2rem">Three.js-kirjastoa ei voitu ladata. Tarkista verkkoyhteys ja päivitä sivu.</p>';}else init();

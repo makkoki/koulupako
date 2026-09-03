@@ -51,32 +51,7 @@
       <noscript>Peli tarvitsee JavaScriptin toimiakseen.</noscript>
     </main>
 
-    <script type="module">
-      // Three.js copied locally by the GitHub Pages build; no browser CDN access needed.
-      const threeSources = [
-        './vendor/three.module.min.js?v=161',
-      ];
-
-      let three;
-      for (const source of threeSources) {
-        try {
-          three = await import(source);
-          break;
-        } catch (error) {
-          console.warn(`Three.js-lataus epäonnistui osoitteesta ${source}`, error);
-        }
-      }
-
-      if (three) {
-        globalThis.THREE = three;
-        await import('./main.js?v=3');
-      } else {
-        document.querySelector('#start-screen .panel').innerHTML = `
-          <div class="eyebrow">LATAUSVIRHE</div>
-          <h2>Peli ei latautunut</h2>
-          <p class="lead">Paikallista pelimoottoria ei löytynyt. Tarkista, että sivusto on julkaistu GitHub Actions -työnkululla.</p>
-          <button type="button" onclick="location.reload()">Yritä uudelleen <span>↻</span></button>`;
-      }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.min.js"></script>
+    <script src="main.js"></script>
   </body>
 </html>
