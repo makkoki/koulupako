@@ -1,57 +1,62 @@
 <!doctype html>
 <html lang="fi">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#172442" />
-    <title>Koulupako 3D</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#10182d">
+    <title>Koulupako</title>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <main id="game" aria-label="Koulupako 3D -peli">
-      <div id="hud" aria-live="polite">
-        <div class="brand"><span class="brand-mark">K</span><span>Koulupako <b>3D</b></span></div>
+    <main id="app">
+      <canvas id="game" aria-label="Koulupako-peli"></canvas>
+
+      <header id="hud" class="hidden" aria-live="polite">
+        <div class="logo"><span>K</span> KOULUPAKO</div>
         <div class="stats">
-          <div class="stat"><span class="stat-icon key-icon">◆</span><span><small>AVAIMET</small><strong id="key-count">0 / 5</strong></span></div>
-          <div class="stat"><span class="stat-icon heart">♥</span><span><small>ELÄMÄT</small><strong id="lives-count">3</strong></span></div>
-          <div class="stat"><span class="stat-icon clock">◷</span><span><small>AIKA</small><strong id="timer">00:00.0</strong></span></div>
+          <div><small>AVAIMET</small><strong id="key-count">0 / 5</strong></div>
+          <div><small>ELÄMÄT</small><strong id="lives">♥ ♥ ♥</strong></div>
+          <div><small>AIKA</small><strong id="timer">00:00</strong></div>
         </div>
-      </div>
+      </header>
 
-      <div id="crosshair" aria-hidden="true"></div>
-      <div id="message" aria-live="assertive"></div>
+      <div id="toast" role="status" aria-live="polite"></div>
 
-      <section id="start-screen" class="overlay visible">
-        <div class="panel">
-          <div class="eyebrow">NOPEUSPELI</div>
-          <h1>Koulupako <span>3D</span></h1>
-          <p class="lead">Koulupäivä venyi taas. Löydä viisi avainta, varo vahtirobottia ja pakene pääovesta!</p>
-          <div class="instructions">
-            <div><span class="keys"><kbd>W</kbd><br><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span><p><b>Liiku</b><br>Käytä WASD-näppäimiä</p></div>
-            <div><span class="mouse">↖</span><p><b>Katso</b><br>Liikuta hiirtä</p></div>
-            <div><span class="key-demo">◆</span><p><b>Kerää</b><br>Löydä kaikki avaimet</p></div>
+      <section id="menu" class="screen">
+        <div class="card">
+          <p class="tag">NOPEUSPELI</p>
+          <h1>KOULU<span>PAKO</span></h1>
+          <p class="intro">Koulun ovet lukittiin. Kerää viisi avainta, väistä vahtimestaria ja ehdi ulos!</p>
+          <div class="howto">
+            <div><b>WASD / nuolet</b><span>Liiku</span></div>
+            <div><b>5 avainta</b><span>Kerää kaikki</span></div>
+            <div><b>Pääovi</b><span>Pakene</span></div>
           </div>
-          <button id="start-button" type="button">Aloita pako <span>→</span></button>
-          <p class="hint">Klikkaa peliä, jos hiiriohjaus keskeytyy.</p>
+          <button id="start" type="button">ALOITA PAKO <span>→</span></button>
+          <p class="tip">Toimii myös puhelimella.</p>
         </div>
       </section>
 
-      <section id="end-screen" class="overlay" aria-hidden="true">
-        <div class="panel end-panel">
-          <div id="end-icon" class="end-icon">★</div>
-          <div id="end-eyebrow" class="eyebrow">PAKO ONNISTUI!</div>
-          <h2 id="end-title">Vapaus!</h2>
-          <p id="end-copy">Pääsit ulos koulusta ajassa</p>
-          <div id="final-time" class="final-time">00:00.0</div>
-          <button id="restart-button" type="button">Pelaa uudelleen <span>↻</span></button>
+      <section id="result" class="screen hidden" aria-hidden="true">
+        <div class="card result-card">
+          <div id="result-icon" class="result-icon">★</div>
+          <p id="result-tag" class="tag">PAKO ONNISTUI</p>
+          <h2 id="result-title">Vapaus!</h2>
+          <p id="result-text">Selvisit koulusta ajassa</p>
+          <strong id="result-time">00:00</strong>
+          <button id="restart" type="button">PELAA UUDELLEEN <span>↻</span></button>
         </div>
       </section>
 
-      <div id="damage" aria-hidden="true"></div>
-      <noscript>Peli tarvitsee JavaScriptin toimiakseen.</noscript>
+      <nav id="touch-controls" class="hidden" aria-label="Kosketusohjaimet">
+        <button data-key="ArrowUp" aria-label="Ylös">▲</button>
+        <button data-key="ArrowLeft" aria-label="Vasemmalle">◀</button>
+        <button data-key="ArrowDown" aria-label="Alas">▼</button>
+        <button data-key="ArrowRight" aria-label="Oikealle">▶</button>
+      </nav>
+
+      <noscript>Pelin käyttö vaatii JavaScriptin.</noscript>
     </main>
-
-    <script src="https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.min.js"></script>
     <script src="main.js"></script>
   </body>
 </html>
