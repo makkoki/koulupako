@@ -1,62 +1,55 @@
 <!doctype html>
 <html lang="fi">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#10182d">
-    <title>Koulupako</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <main id="app">
-      <canvas id="game" aria-label="Koulupako-peli"></canvas>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#10172b">
+  <title>Koulupako 3D</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="app">
+    <canvas id="game" aria-label="Koulupako 3D -peli"></canvas>
+    <header id="hud" class="hidden">
+      <div class="brand"><i>K</i><span>KOULUPAKO <b>3D</b></span></div>
+      <div class="stats" aria-live="polite">
+        <div><small>AIKA</small><strong id="timer">00:00</strong></div>
+        <div><small>AVAIMET</small><strong id="key-count">0 / 5</strong></div>
+        <div><small>ELÄMÄT</small><strong id="lives">♥ ♥ ♥</strong></div>
+      </div>
+    </header>
+    <div id="crosshair" class="hidden" aria-hidden="true"></div>
+    <div id="danger" class="hidden">⚠ ROBOTTI HAVAITSI SINUT!</div>
+    <div id="toast" role="status" aria-live="polite"></div>
 
-      <header id="hud" class="hidden" aria-live="polite">
-        <div class="logo"><span>K</span> KOULUPAKO</div>
-        <div class="stats">
-          <div><small>AVAIMET</small><strong id="key-count">0 / 5</strong></div>
-          <div><small>ELÄMÄT</small><strong id="lives">♥ ♥ ♥</strong></div>
-          <div><small>AIKA</small><strong id="timer">00:00</strong></div>
+    <section id="menu" class="screen">
+      <div class="card">
+        <p class="tag">🔑 NOPEA 3D-SEIKKAILU</p>
+        <h1>KOULUPAKO <span>3D</span></h1>
+        <p class="intro">Löydä viisi avainta ja pääse koulusta ulos ennen kuin robottivartija saa sinut kiinni!</p>
+        <div class="howto">
+          <div><kbd>W A S D</kbd><span>Liiku</span></div>
+          <div><span class="mouse">◉</span><span>Hiiri = katso</span></div>
+          <div><span class="key-icon">🔑 × 5</span><span>Kerää avaimet</span></div>
         </div>
-      </header>
+        <button id="start" type="button">ALOITA PELI <span>→</span></button>
+        <p class="tip">Klikkaa pelialuetta palataksesi peliin, jos hiiri vapautuu.</p>
+      </div>
+    </section>
 
-      <div id="toast" role="status" aria-live="polite"></div>
-
-      <section id="menu" class="screen">
-        <div class="card">
-          <p class="tag">NOPEUSPELI</p>
-          <h1>KOULU<span>PAKO</span></h1>
-          <p class="intro">Koulun ovet lukittiin. Kerää viisi avainta, väistä vahtimestaria ja ehdi ulos!</p>
-          <div class="howto">
-            <div><b>WASD / nuolet</b><span>Liiku</span></div>
-            <div><b>5 avainta</b><span>Kerää kaikki</span></div>
-            <div><b>Pääovi</b><span>Pakene</span></div>
-          </div>
-          <button id="start" type="button">ALOITA PAKO <span>→</span></button>
-          <p class="tip">Toimii myös puhelimella.</p>
-        </div>
-      </section>
-
-      <section id="result" class="screen hidden" aria-hidden="true">
-        <div class="card result-card">
-          <div id="result-icon" class="result-icon">★</div>
-          <p id="result-tag" class="tag">PAKO ONNISTUI</p>
-          <h2 id="result-title">Vapaus!</h2>
-          <p id="result-text">Selvisit koulusta ajassa</p>
-          <strong id="result-time">00:00</strong>
-          <button id="restart" type="button">PELAA UUDELLEEN <span>↻</span></button>
-        </div>
-      </section>
-
-      <nav id="touch-controls" class="hidden" aria-label="Kosketusohjaimet">
-        <button data-key="ArrowUp" aria-label="Ylös">▲</button>
-        <button data-key="ArrowLeft" aria-label="Vasemmalle">◀</button>
-        <button data-key="ArrowDown" aria-label="Alas">▼</button>
-        <button data-key="ArrowRight" aria-label="Oikealle">▶</button>
-      </nav>
-
-      <noscript>Pelin käyttö vaatii JavaScriptin.</noscript>
-    </main>
-    <script src="main.js"></script>
-  </body>
+    <section id="result" class="screen hidden" aria-hidden="true">
+      <div class="card result-card">
+        <div id="result-icon" class="result-icon">★</div>
+        <p id="result-tag" class="tag">PAKO ONNISTUI!</p>
+        <h2 id="result-title">PÄÄSIT ULOS!</h2>
+        <p id="result-text">Loppuaika</p>
+        <strong id="result-time">00:00</strong>
+        <button id="restart" type="button">PELAA UUDELLEEN <span>↻</span></button>
+      </div>
+    </section>
+    <div id="loading">Rakennetaan koulua…</div>
+    <noscript>Peli tarvitsee JavaScriptin toimiakseen.</noscript>
+  </main>
+  <script type="module" src="main.js"></script>
+</body>
 </html>
