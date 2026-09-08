@@ -8,10 +8,13 @@
     touch: document.querySelector('#touch-controls'), keys: document.querySelector('#key-count'), lives: document.querySelector('#lives'),
     timer: document.querySelector('#timer'), toast: document.querySelector('#toast'), resultIcon: document.querySelector('#result-icon'),
     resultTag: document.querySelector('#result-tag'), resultTitle: document.querySelector('#result-title'),
-    resultText: document.querySelector('#result-text'), resultTime: document.querySelector('#result-time')
+    resultText: document.querySelector('#result-text'), resultTime: document.querySelector('#result-time'),
+    highscores: document.querySelector('#highscores-list'), highscoresEmpty: document.querySelector('#highscores-empty')
   };
 
   const WORLD = { width: 1400, height: 900 };
+  const HIGHSCORE_KEY = 'koulupako-highscores';
+  const MAX_HIGHSCORES = 5;
   const walls = [
     [0,0,1400,32],[0,868,590,32],[810,868,590,32],[0,0,32,900],[1368,0,32,900],
     [250,150,32,250],[250,520,32,220],[520,32,32,180],[520,330,32,290],[520,750,32,118],
@@ -46,9 +49,37 @@
     ui.resultIcon.textContent=won?'★':'!'; ui.resultTag.textContent=won?'PAKO ONNISTUI':'JÄIT KIINNI';
     ui.resultTitle.textContent=won?'Vapaus!':'Uusi yritys?'; ui.resultText.textContent=won?'Selvisit koulusta ajassa':'Vahtimestari sai sinut. Aikasi oli';
     ui.resultTime.textContent=formatTime(state.elapsed);
+    const latestScore=won?saveHighscore(state.elapsed):null;
+    renderHighscores(latestScore);
   }
   function updateHud() { ui.keys.textContent=`${state.keys} / 5`; ui.lives.textContent='♥ '.repeat(state.lives).trim() || '—'; ui.timer.textContent=formatTime(state.elapsed); }
   function formatTime(s) { return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(Math.floor(s%60)).padStart(2,'0')}`; }
+  function getHighscores() {
+    try {
+      const scores=JSON.parse(localStorage.getItem(HIGHSCORE_KEY) || '[]');
+      return Array.isArray(scores)?scores.filter(score=>score&&Number.isFinite(score.time)&&score.time>=0):[];
+    } catch (_) { return []; }
+  }
+  function saveHighscore(time) {
+    const score={id:`${Date.now()}-${Math.random()}`,time};
+    const scores=[...getHighscores(),score].sort((a,b)=>a.time-b.time).slice(0,MAX_HIGHSCORES);
+    try { localStorage.setItem(HIGHSCORE_KEY,JSON.stringify(scores)); } catch (_) { /* Scores still display for this round. */ }
+    return scores.some(item=>item.id===score.id)?score:null;
+  }
+  function renderHighscores(latestScore=null) {
+    const scores=getHighscores();
+    if(latestScore&&!scores.some(score=>score.id===latestScore.id))scores.push(latestScore);
+    scores.sort((a,b)=>a.time-b.time); ui.highscores.replaceChildren();
+    scores.slice(0,MAX_HIGHSCORES).forEach((score,index)=>{
+      const item=document.createElement('li');
+      const place=document.createElement('span'); place.textContent=`${index+1}.`;
+      const time=document.createElement('strong'); time.textContent=formatTime(score.time);
+      item.append(place,time);
+      if(latestScore&&score.id===latestScore.id){item.classList.add('latest');item.setAttribute('aria-label',`${index+1}. sija, ${formatTime(score.time)}, uusi tuloksesi`);}
+      ui.highscores.append(item);
+    });
+    ui.highscoresEmpty.classList.toggle('hidden',scores.length>0);
+  }
   function showToast(text) { ui.toast.textContent=text;ui.toast.classList.add('show');clearTimeout(state.toastTimer);state.toastTimer=setTimeout(()=>ui.toast.classList.remove('show'),2100); }
   function hitsWall(x,y,r=player.r) { return walls.some(([wx,wy,ww,wh])=>x+r>wx&&x-r<wx+ww&&y+r>wy&&y-r<wy+wh); }
 

@@ -28,7 +28,15 @@ h2 { font-size:clamp(46px,8vw,68px); }
 .card button { min-width:240px; padding:16px 25px; border:0; border-radius:12px; color:var(--ink); background:var(--yellow); font-weight:900; cursor:pointer; box-shadow:0 5px #c99c14,0 12px 25px #0006; transition:transform .15s; }
 .card button:hover { transform:translateY(-2px); }.card button:active { transform:translateY(3px); }.card button span { margin-left:14px; }
 .tip { margin:20px 0 0; color:#73829e; font-size:11px; }
-.result-icon { color:var(--yellow); font-size:60px; }.result-card>p:not(.tag) { color:#aebbd1; }.result-card>strong { display:block; margin:8px 0 28px; color:var(--blue); font-size:44px; }
+.result-icon { color:var(--yellow); font-size:60px; }.result-card>p:not(.tag) { color:#aebbd1; }.result-card>strong { display:block; margin:8px 0 20px; color:var(--blue); font-size:44px; }
+.highscores { max-width:340px; margin:0 auto 26px; padding:16px 20px; border:1px solid #ffffff14; border-radius:16px; background:#0913298c; }
+.highscores h3 { margin:0 0 10px; color:#c7d3e8; font-size:12px; letter-spacing:.16em; text-transform:uppercase; }
+.highscores ol { display:grid; gap:5px; margin:0; padding:0; list-style:none; }
+.highscores li { display:flex; justify-content:space-between; padding:5px 9px; border-radius:8px; color:#8f9db6; font-size:14px; }
+.highscores li strong { color:white; font-variant-numeric:tabular-nums; }
+.highscores li.latest { color:var(--ink); background:var(--yellow); font-weight:900; }
+.highscores li.latest strong { color:var(--ink); }
+#highscores-empty { margin:4px 0 0; color:#73829e; font-size:12px; }
 #toast { position:fixed; z-index:5; top:100px; left:50%; max-width:calc(100% - 30px); padding:11px 18px; opacity:0; transform:translate(-50%,-8px); border:1px solid #fff2; border-radius:12px; background:#10182def; box-shadow:0 8px 30px #0007; font-weight:800; text-align:center; pointer-events:none; transition:.2s; }
 #toast.show { opacity:1; transform:translate(-50%,0); }
 
