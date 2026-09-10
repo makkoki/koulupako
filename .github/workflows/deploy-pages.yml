@@ -1,0 +1,42 @@
+name: Julkaise Koulupako 3D
+
+on:
+  push:
+    branches: [main, master, work]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Nouda lähdekoodi
+        uses: actions/checkout@v4
+      - name: Asenna Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Asenna riippuvuudet
+        run: npm install --no-package-lock
+      - name: Rakenna staattinen sivusto
+        run: npm run build
+      - name: Valmistele GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Lähetä sivusto
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - name: Julkaise GitHub Pagesiin
+        id: deployment
+        uses: actions/deploy-pages@v4

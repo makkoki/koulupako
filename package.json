@@ -1,0 +1,12 @@
+{
+  "name": "koulupako-3d",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Selainpohjainen Three.js-koulupakopeli",
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  },
+  "dependencies": {
+    "three": "0.161.0"
+  }
+}
